@@ -683,39 +683,6 @@ body::before{
 }
 .btn-editar:hover{background: var(--marrom); color: white; border-color: var(--marrom);}
 
-/* Compartilhar */
-.compartilhar{
-  text-align:center;
-  margin-top: 24px;
-  position:relative;
-  z-index:2;
-}
-.compartilhar p{
-  font-size: 13px;
-  color: var(--marrom-claro);
-  margin-bottom: 10px;
-}
-.btn-compartilhar{
-  background: rgba(255,255,255,0.75);
-  border: 1.5px solid rgba(122,74,43,0.15);
-  border-radius: 100px;
-  padding: 10px 22px;
-  color: var(--marrom);
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 14px;
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-  transition: all .2s ease;
-}
-.btn-compartilhar:hover{
-  background: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(122,74,43,0.12);
-}
-
 /* ======== CARD DO VÍDEO DA ULTRASSONOGRAFIA ======== */
 .video-card{
   margin-top: 30px;
@@ -1333,14 +1300,6 @@ footer{
 
   </section>
 
-  <!-- Compartilhar -->
-  <div class="compartilhar">
-    <p>Conhece alguém que vai amar esse convite?</p>
-    <button class="btn-compartilhar" id="btn-compartilhar" type="button">
-      💌 Compartilhar convite
-    </button>
-  </div>
-
   <footer>
     Feito com muito amor para os gêmeos de Álvaro &amp; Alessandra 💙💗
   </footer>
@@ -1691,25 +1650,6 @@ if (btnEditar) btnEditar.addEventListener('click', async ()=>{
   document.getElementById('formulario-rsvp').style.display = 'block';
   document.getElementById('tela-obrigado').style.display = 'none';
   document.getElementById('rsvp-card').scrollIntoView({behavior:'smooth', block:'start'});
-});
-
-// ============================================================
-// COMPARTILHAR
-// ============================================================
-const btnComp = document.getElementById('btn-compartilhar');
-if (btnComp) btnComp.addEventListener('click', async ()=>{
-  const url = window.location.origin + window.location.pathname; // sem ?admin=
-  const texto = 'Você está convidado(a) para o Chá Revelação dos gêmeos de Álvaro & Alessandra! 💙💗';
-  if (navigator.share){
-    try { await navigator.share({title:'Chá Revelação', text: texto, url: url}); } catch(e){/* cancelado */}
-  } else {
-    try {
-      await navigator.clipboard.writeText(url);
-      const original = btnComp.innerHTML;
-      btnComp.innerHTML = '✅ Link copiado!';
-      setTimeout(()=>{ btnComp.innerHTML = original; }, 2500);
-    } catch(e){ prompt('Copie o link do convite:', url); }
-  }
 });
 
 // ============================================================
