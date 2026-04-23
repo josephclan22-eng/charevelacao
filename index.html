@@ -475,7 +475,6 @@ body::before{
   color: var(--texto);
   transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
   -webkit-appearance: none;
-  appearance: none;
 }
 .input-texto:focus{
   outline:none;
@@ -830,6 +829,294 @@ body::before{
   .video-card{padding: 28px 18px 26px; border-radius: 22px;}
 }
 
+/* ======== CONTADOR DE VISITANTES ======== */
+.visitantes-badge{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  margin: 20px auto 0;
+  padding: 8px 18px;
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 100px;
+  width: fit-content;
+  font-size: 13px;
+  color: var(--marrom-claro);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(122,74,43,0.08);
+  position: relative;
+  z-index: 2;
+  animation: entrada 1s 1.4s cubic-bezier(.2,.9,.3,1) both;
+}
+.visitantes-badge .ponto{
+  width: 8px;
+  height: 8px;
+  background: #7fb58f;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(127,181,143,0.7);
+  animation: pulsar 2s infinite;
+}
+@keyframes pulsar{
+  0%{box-shadow: 0 0 0 0 rgba(127,181,143,0.7);}
+  70%{box-shadow: 0 0 0 8px rgba(127,181,143,0);}
+  100%{box-shadow: 0 0 0 0 rgba(127,181,143,0);}
+}
+.visitantes-badge strong{
+  color: var(--marrom);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* ======== PAINEL ADMIN ======== */
+.admin-overlay{
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(135deg, #fff9f0 0%, #fce4ec 100%);
+  z-index: 1000;
+  overflow-y: auto;
+  padding: 24px 16px 60px;
+  animation: entrada 0.5s ease both;
+}
+.admin-container{
+  max-width: 900px;
+  margin: 0 auto;
+}
+.admin-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.admin-header h1{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 5vw, 32px);
+  color: var(--marrom);
+  font-weight: 700;
+}
+.admin-header .badge-admin{
+  display: inline-block;
+  background: var(--marrom);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.admin-sair{
+  background: rgba(255,255,255,0.7);
+  border: 1.5px solid rgba(122,74,43,0.2);
+  color: var(--marrom);
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.admin-sair:hover{background: var(--marrom); color: #fff;}
+
+.admin-stats{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.admin-stat-card{
+  background: var(--papel);
+  border-radius: 18px;
+  padding: 20px 18px;
+  box-shadow: var(--sombra);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.admin-stat-card::before{
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.admin-stat-card.visitas::before{background: radial-gradient(circle, var(--azul) 0%, transparent 70%);}
+.admin-stat-card.confirmados::before{background: radial-gradient(circle, #c8e8d0 0%, transparent 70%);}
+.admin-stat-card.recusados::before{background: radial-gradient(circle, var(--rosa) 0%, transparent 70%);}
+.admin-stat-card.total::before{background: radial-gradient(circle, var(--dourado) 0%, transparent 70%);}
+
+.admin-stat-num{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--marrom);
+  line-height: 1;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+.admin-stat-label{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--marrom-claro);
+  margin-top: 8px;
+  display: block;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-secao{
+  background: var(--papel);
+  border-radius: 22px;
+  padding: 24px 22px;
+  box-shadow: var(--sombra);
+  margin-bottom: 20px;
+}
+.admin-secao h2{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: var(--marrom);
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.admin-secao h2 .qtd{
+  background: rgba(122,74,43,0.1);
+  color: var(--marrom);
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-lista{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.admin-item{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 14px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(122,74,43,0.1);
+  border-radius: 14px;
+  align-items: start;
+}
+.admin-item.sim{border-left: 4px solid #7fb58f;}
+.admin-item.nao{border-left: 4px solid var(--rosa-forte); opacity: 0.85;}
+
+.admin-item-nome{
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--marrom);
+}
+.admin-item-acomp{
+  font-size: 13px;
+  color: var(--marrom-claro);
+  margin-top: 2px;
+}
+.admin-item-recado{
+  grid-column: 1 / -1;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--texto);
+  background: rgba(247,201,211,0.15);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 6px;
+}
+.admin-item-recado::before{content: "💬 ";}
+.admin-item-data{
+  font-size: 11px;
+  color: var(--marrom-claro);
+  text-align: right;
+  white-space: nowrap;
+}
+.admin-item-pessoas{
+  background: #c8e8d0;
+  color: #2f6b3e;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.admin-item.nao .admin-item-pessoas{
+  background: var(--rosa);
+  color: #8a3d4f;
+}
+
+.admin-vazio{
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--marrom-claro);
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+}
+
+.admin-acoes{
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  justify-content: center;
+}
+.admin-btn{
+  background: linear-gradient(135deg, var(--azul-forte) 0%, var(--rosa-forte) 100%);
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 100px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 14px rgba(143,184,224,0.3);
+  transition: transform .2s ease;
+}
+.admin-btn:hover{transform: translateY(-2px);}
+.admin-btn.secundario{
+  background: rgba(255,255,255,0.8);
+  color: var(--marrom);
+  border: 1.5px solid rgba(122,74,43,0.2);
+  box-shadow: none;
+}
+
+.admin-loading{
+  text-align:center;
+  padding: 60px 20px;
+  color: var(--marrom-claro);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+}
+
+@media (max-width: 480px){
+  .admin-stat-num{font-size: 36px;}
+  .admin-secao{padding: 20px 16px;}
+  .admin-item{padding: 12px 14px;}
+}
+
 /* Footer */
 footer{
   text-align:center;
@@ -952,6 +1239,12 @@ footer{
       <div class="contagem-item"><span class="contagem-num" id="segundos">--</span><span class="contagem-label">Seg</span></div>
     </div>
 
+    <!-- Contador de visitantes -->
+    <div class="visitantes-badge" id="visitantes-badge" title="Pessoas que já visualizaram o convite">
+      <span class="ponto" aria-hidden="true"></span>
+      <span><strong id="num-visitantes">...</strong> pessoas já viram este convite</span>
+    </div>
+
   </article>
 
   <!-- ============ CARD DO VÍDEO DA ULTRASSOM ============ -->
@@ -1054,17 +1347,118 @@ footer{
 
 </main>
 
-<script>
-// ======== CONTAGEM REGRESSIVA ========
-// Evento: 30 de Maio de 2026, 15:30 (horário de Brasília, UTC-3)
-const dataEvento = new Date('2026-05-30T15:30:00-03:00').getTime();
+<!-- ============ PAINEL ADMIN (oculto por padrão) ============ -->
+<div class="admin-overlay" id="admin-overlay" style="display:none;">
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1>📋 Painel <span class="badge-admin">Admin</span></h1>
+      <button type="button" class="admin-sair" id="admin-sair">← Voltar ao convite</button>
+    </div>
 
+    <div class="admin-loading" id="admin-loading">Carregando dados... ⏳</div>
+
+    <div id="admin-conteudo" style="display:none;">
+
+      <!-- Cards de estatísticas -->
+      <div class="admin-stats">
+        <div class="admin-stat-card visitas">
+          <span class="admin-stat-num" id="stat-visitas">0</span>
+          <span class="admin-stat-label">👀 Visitantes</span>
+        </div>
+        <div class="admin-stat-card confirmados">
+          <span class="admin-stat-num" id="stat-confirmados">0</span>
+          <span class="admin-stat-label">✅ Confirmaram</span>
+        </div>
+        <div class="admin-stat-card recusados">
+          <span class="admin-stat-num" id="stat-recusados">0</span>
+          <span class="admin-stat-label">💔 Não vão</span>
+        </div>
+        <div class="admin-stat-card total">
+          <span class="admin-stat-num" id="stat-total">0</span>
+          <span class="admin-stat-label">🎉 Total no evento</span>
+        </div>
+      </div>
+
+      <!-- Lista de quem confirmou presença -->
+      <div class="admin-secao">
+        <h2>✅ Confirmaram presença <span class="qtd" id="qtd-sim">0</span></h2>
+        <div class="admin-lista" id="lista-sim"></div>
+      </div>
+
+      <!-- Lista de quem não vai -->
+      <div class="admin-secao">
+        <h2>💔 Não poderão ir <span class="qtd" id="qtd-nao">0</span></h2>
+        <div class="admin-lista" id="lista-nao"></div>
+      </div>
+
+      <!-- Ações -->
+      <div class="admin-acoes">
+        <button type="button" class="admin-btn" id="btn-atualizar">🔄 Atualizar dados</button>
+        <button type="button" class="admin-btn secundario" id="btn-exportar">📥 Exportar lista (CSV)</button>
+        <button type="button" class="admin-btn secundario" id="btn-copiar">📋 Copiar resumo</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIGURAÇÃO — jsonbin.io (banco de dados gratuito)
+// ============================================================
+const CONFIG = {
+  BIN_ID: '69e96c76aaba88219729dbea',
+  API_KEY: '$2a$10$X3BIwqqXDBRUiCvjNEX3WOfVX15KE14jZTrYXvwVH0KszXp4V1soa',
+  ADMIN_PASS: 'gemeos2026'
+};
+const API_URL = `https://api.jsonbin.io/v3/b/${CONFIG.BIN_ID}`;
+const HEADERS = {
+  'Content-Type': 'application/json',
+  'X-Master-Key': CONFIG.API_KEY
+};
+
+// ============================================================
+// FUNÇÕES DE BANCO (ler/escrever no jsonbin)
+// ============================================================
+async function lerDados(){
+  try {
+    const res = await fetch(API_URL + '/latest', { headers: HEADERS });
+    if (!res.ok) throw new Error('Erro ao ler dados');
+    const json = await res.json();
+    const dados = json.record || {};
+    if (!dados.confirmacoes) dados.confirmacoes = [];
+    if (typeof dados.visitas !== 'number') dados.visitas = 0;
+    return dados;
+  } catch(err){
+    console.error('Erro lerDados:', err);
+    return null;
+  }
+}
+
+async function salvarDados(dados){
+  try {
+    const res = await fetch(API_URL, {
+      method: 'PUT',
+      headers: HEADERS,
+      body: JSON.stringify(dados)
+    });
+    return res.ok;
+  } catch(err){
+    console.error('Erro salvarDados:', err);
+    return false;
+  }
+}
+
+// ============================================================
+// CONTAGEM REGRESSIVA
+// ============================================================
+const dataEvento = new Date('2026-05-30T15:30:00-03:00').getTime();
 function atualizarContagem(){
   const agora = new Date().getTime();
   const diff = dataEvento - agora;
-
   if (diff < 0){
-    document.getElementById('contagem').innerHTML =
+    const cont = document.getElementById('contagem');
+    if (cont) cont.innerHTML =
       '<div class="contagem-item" style="min-width:auto;padding:14px 24px;"><span class="contagem-num" style="font-size:20px;">🎉 É hoje ou já aconteceu! 🎉</span></div>';
     return;
   }
@@ -1072,15 +1466,70 @@ function atualizarContagem(){
   const horas = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
   const mins = Math.floor((diff % (1000*60*60)) / (1000*60));
   const segs = Math.floor((diff % (1000*60)) / 1000);
-  document.getElementById('dias').textContent = String(dias).padStart(2,'0');
-  document.getElementById('horas').textContent = String(horas).padStart(2,'0');
-  document.getElementById('minutos').textContent = String(mins).padStart(2,'0');
-  document.getElementById('segundos').textContent = String(segs).padStart(2,'0');
+  const set = (id, v) => { const el = document.getElementById(id); if(el) el.textContent = String(v).padStart(2,'0'); };
+  set('dias', dias); set('horas', horas); set('minutos', mins); set('segundos', segs);
 }
 atualizarContagem();
 setInterval(atualizarContagem, 1000);
 
-// ======== CONTADOR DE ACOMPANHANTES ========
+// ============================================================
+// MODO ADMIN — verificar se está acessando ?admin=SENHA
+// ============================================================
+const params = new URLSearchParams(window.location.search);
+const adminParam = params.get('admin');
+const isAdmin = adminParam === CONFIG.ADMIN_PASS;
+
+if (isAdmin){
+  // Esconder página principal e mostrar painel
+  document.querySelector('.container').style.display = 'none';
+  document.getElementById('admin-overlay').style.display = 'block';
+  carregarPainelAdmin();
+} else {
+  // Modo normal — registrar visita e iniciar formulário
+  inicializarConvite();
+}
+
+// ============================================================
+// MODO CONVITE NORMAL
+// ============================================================
+async function inicializarConvite(){
+  // Registrar visita (se ainda não foi nesta sessão)
+  await registrarVisita();
+  // Carregar e mostrar contador de visitantes
+  await atualizarContadorVisitantes();
+  // Restaurar resposta se já tinha confirmado
+  await restaurarResposta();
+}
+
+async function registrarVisita(){
+  // Usa sessionStorage pra não contar a mesma pessoa toda vez que recarrega
+  let jaContou;
+  try { jaContou = sessionStorage.getItem('ja_visitou'); } catch(e){}
+  if (jaContou) return;
+
+  const dados = await lerDados();
+  if (!dados) return;
+  dados.visitas = (dados.visitas || 0) + 1;
+  const ok = await salvarDados(dados);
+  if (ok){
+    try { sessionStorage.setItem('ja_visitou', '1'); } catch(e){}
+  }
+}
+
+async function atualizarContadorVisitantes(){
+  const dados = await lerDados();
+  const el = document.getElementById('num-visitantes');
+  if (!el) return;
+  if (dados){
+    el.textContent = dados.visitas || 0;
+  } else {
+    el.textContent = '—';
+  }
+}
+
+// ============================================================
+// CONTADOR DE ACOMPANHANTES
+// ============================================================
 let qtdAcomp = 0;
 const MAX_ACOMP = 10;
 const elQtd = document.getElementById('qtd-acompanhantes');
@@ -1088,15 +1537,18 @@ const btnMenos = document.getElementById('btn-menos');
 const btnMais = document.getElementById('btn-mais');
 
 function atualizarContador(){
+  if (!elQtd) return;
   elQtd.textContent = qtdAcomp;
-  btnMenos.disabled = qtdAcomp <= 0;
-  btnMais.disabled = qtdAcomp >= MAX_ACOMP;
+  if (btnMenos) btnMenos.disabled = qtdAcomp <= 0;
+  if (btnMais) btnMais.disabled = qtdAcomp >= MAX_ACOMP;
 }
-btnMenos.addEventListener('click', ()=>{ if(qtdAcomp>0){qtdAcomp--; atualizarContador();} });
-btnMais.addEventListener('click', ()=>{ if(qtdAcomp<MAX_ACOMP){qtdAcomp++; atualizarContador();} });
+if (btnMenos) btnMenos.addEventListener('click', ()=>{ if(qtdAcomp>0){qtdAcomp--; atualizarContador();} });
+if (btnMais) btnMais.addEventListener('click', ()=>{ if(qtdAcomp<MAX_ACOMP){qtdAcomp++; atualizarContador();} });
 atualizarContador();
 
-// ======== LÓGICA DO FORMULÁRIO ========
+// ============================================================
+// FORMULÁRIO DE RSVP
+// ============================================================
 const form = document.getElementById('form-rsvp');
 const radioSim = document.getElementById('vem-sim');
 const radioNao = document.getElementById('vem-nao');
@@ -1104,8 +1556,8 @@ const grupoAcomp = document.getElementById('grupo-acompanhantes');
 const btnEnviar = document.getElementById('btn-enviar');
 const status = document.getElementById('status');
 
-// Esconder contador se pessoa não for
 function toggleAcompanhantes(){
+  if(!radioNao || !radioSim) return;
   if(radioNao.checked){
     grupoAcomp.style.display = 'none';
     qtdAcomp = 0;
@@ -1114,15 +1566,15 @@ function toggleAcompanhantes(){
     grupoAcomp.style.display = 'block';
   }
 }
-radioSim.addEventListener('change', toggleAcompanhantes);
-radioNao.addEventListener('change', toggleAcompanhantes);
+if (radioSim) radioSim.addEventListener('change', toggleAcompanhantes);
+if (radioNao) radioNao.addEventListener('change', toggleAcompanhantes);
 
-// ======== ENVIO / SALVAR ========
 function gerarId(){
   return 'rsvp_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
 }
 
 function mostrarStatus(msg, tipo){
+  if (!status) return;
   status.textContent = msg;
   status.className = 'status ' + tipo;
   if(tipo==='sucesso'){
@@ -1130,48 +1582,63 @@ function mostrarStatus(msg, tipo){
   }
 }
 
-async function salvarConfirmacao(dados){
-  // Tenta salvar na storage compartilhada (visível para os anfitriões)
-  try {
-    if (window.storage && typeof window.storage.set === 'function'){
-      const chave = 'confirmacao:' + dados.id;
-      await window.storage.set(chave, JSON.stringify(dados), true);
-      // guarda ID local pra edição posterior
-      try { localStorage.setItem('meu_rsvp_id', dados.id); } catch(e){}
-      return true;
-    }
-  } catch(err){
-    console.warn('Storage compartilhada indisponível, usando localStorage:', err);
+async function salvarConfirmacao(novo){
+  const dados = await lerDados();
+  if (!dados) return false;
+
+  // Verifica se essa pessoa já confirmou (pelo ID local) — atualiza em vez de duplicar
+  const idx = dados.confirmacoes.findIndex(c => c.id === novo.id);
+  if (idx >= 0){
+    dados.confirmacoes[idx] = novo;
+  } else {
+    dados.confirmacoes.push(novo);
   }
-  // Fallback: salvar só local
-  try {
-    const todas = JSON.parse(localStorage.getItem('rsvps_local')||'[]');
-    todas.push(dados);
-    localStorage.setItem('rsvps_local', JSON.stringify(todas));
-    localStorage.setItem('meu_rsvp_id', dados.id);
-    return true;
-  } catch(e){
-    return false;
-  }
+  return await salvarDados(dados);
 }
 
-async function carregarMinhaConfirmacao(){
-  let meuId;
-  try { meuId = localStorage.getItem('meu_rsvp_id'); } catch(e){ return null; }
-  if (!meuId) return null;
-  try {
-    if (window.storage && typeof window.storage.get === 'function'){
-      const r = await window.storage.get('confirmacao:' + meuId, true);
-      if (r && r.value) return JSON.parse(r.value);
-    }
-  } catch(e){
-    // Se cai aqui é porque a chave não existe ou falhou — segue pro fallback
+if (form) form.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const nome = document.getElementById('nome').value.trim();
+  const recado = document.getElementById('recado').value.trim();
+  const vemEl = document.querySelector('input[name="vem"]:checked');
+
+  if(!nome){
+    mostrarStatus('Por favor, digite seu nome ✨', 'erro');
+    document.getElementById('nome').focus();
+    return;
   }
-  try {
-    const todas = JSON.parse(localStorage.getItem('rsvps_local')||'[]');
-    return todas.find(r => r.id === meuId) || null;
-  } catch(e){ return null; }
-}
+  if(!vemEl){
+    mostrarStatus('Escolha se você vem ou não 💕', 'erro');
+    return;
+  }
+
+  btnEnviar.disabled = true;
+  btnEnviar.textContent = 'Enviando...';
+
+  // Reaproveita ID se já tinha confirmado antes
+  let idExistente;
+  try { idExistente = localStorage.getItem('meu_rsvp_id'); } catch(e){}
+
+  const dados = {
+    id: idExistente || gerarId(),
+    nome: nome,
+    vem: vemEl.value,
+    acompanhantes: vemEl.value === 'sim' ? qtdAcomp : 0,
+    recado: recado,
+    enviado_em: new Date().toISOString()
+  };
+
+  const ok = await salvarConfirmacao(dados);
+  btnEnviar.disabled = false;
+  btnEnviar.innerHTML = 'Confirmar Presença 💕';
+
+  if (ok){
+    try { localStorage.setItem('meu_rsvp_id', dados.id); } catch(e){}
+    mostrarObrigado(dados);
+  } else {
+    mostrarStatus('Ops, não consegui salvar. Verifica sua internet e tenta de novo 💕', 'erro');
+  }
+});
 
 function mostrarObrigado(dados){
   document.getElementById('formulario-rsvp').style.display = 'none';
@@ -1192,92 +1659,205 @@ function mostrarObrigado(dados){
   }
 }
 
-form.addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const nome = document.getElementById('nome').value.trim();
-  const recado = document.getElementById('recado').value.trim();
-  const vemEl = document.querySelector('input[name="vem"]:checked');
+async function restaurarResposta(){
+  let meuId;
+  try { meuId = localStorage.getItem('meu_rsvp_id'); } catch(e){ return; }
+  if (!meuId) return;
+  const dados = await lerDados();
+  if (!dados) return;
+  const minha = dados.confirmacoes.find(c => c.id === meuId);
+  if (minha) mostrarObrigado(minha);
+}
 
-  if(!nome){
-    mostrarStatus('Por favor, digite seu nome ✨', 'erro');
-    document.getElementById('nome').focus();
-    return;
-  }
-  if(!vemEl){
-    mostrarStatus('Escolha se você vem ou não 💕', 'erro');
-    return;
-  }
-
-  btnEnviar.disabled = true;
-  btnEnviar.textContent = 'Enviando...';
-
-  // Busca ID existente pra atualizar (se já tinha respondido)
-  let idExistente;
-  try { idExistente = localStorage.getItem('meu_rsvp_id'); } catch(e){}
-
-  const dados = {
-    id: idExistente || gerarId(),
-    nome: nome,
-    vem: vemEl.value,
-    acompanhantes: vemEl.value === 'sim' ? qtdAcomp : 0,
-    recado: recado,
-    enviado_em: new Date().toISOString()
-  };
-
-  const ok = await salvarConfirmacao(dados);
-  btnEnviar.disabled = false;
-  btnEnviar.innerHTML = 'Confirmar Presença 💕';
-
-  if (ok){
-    mostrarObrigado(dados);
-  } else {
-    mostrarStatus('Ops, não consegui salvar. Tenta de novo? 💕', 'erro');
-  }
-});
-
-// Botão editar resposta
-document.getElementById('btn-editar').addEventListener('click', async ()=>{
-  const dados = await carregarMinhaConfirmacao();
-  if (dados){
-    document.getElementById('nome').value = dados.nome || '';
-    document.getElementById('recado').value = dados.recado || '';
-    if (dados.vem === 'sim') radioSim.checked = true;
-    else if (dados.vem === 'nao') radioNao.checked = true;
-    qtdAcomp = dados.acompanhantes || 0;
-    atualizarContador();
-    toggleAcompanhantes();
+const btnEditar = document.getElementById('btn-editar');
+if (btnEditar) btnEditar.addEventListener('click', async ()=>{
+  let meuId;
+  try { meuId = localStorage.getItem('meu_rsvp_id'); } catch(e){}
+  if (meuId){
+    const dados = await lerDados();
+    if (dados){
+      const minha = dados.confirmacoes.find(c => c.id === meuId);
+      if (minha){
+        document.getElementById('nome').value = minha.nome || '';
+        document.getElementById('recado').value = minha.recado || '';
+        if (minha.vem === 'sim') radioSim.checked = true;
+        else if (minha.vem === 'nao') radioNao.checked = true;
+        qtdAcomp = minha.acompanhantes || 0;
+        atualizarContador();
+        toggleAcompanhantes();
+      }
+    }
   }
   document.getElementById('formulario-rsvp').style.display = 'block';
   document.getElementById('tela-obrigado').style.display = 'none';
   document.getElementById('rsvp-card').scrollIntoView({behavior:'smooth', block:'start'});
 });
 
-// Restaurar resposta ao carregar (se já tinha confirmado)
-(async function restaurar(){
-  const dados = await carregarMinhaConfirmacao();
-  if (dados){
-    mostrarObrigado(dados);
-  }
-})();
-
-// ======== COMPARTILHAR ========
-document.getElementById('btn-compartilhar').addEventListener('click', async ()=>{
-  const url = window.location.href;
+// ============================================================
+// COMPARTILHAR
+// ============================================================
+const btnComp = document.getElementById('btn-compartilhar');
+if (btnComp) btnComp.addEventListener('click', async ()=>{
+  const url = window.location.origin + window.location.pathname; // sem ?admin=
   const texto = 'Você está convidado(a) para o Chá Revelação dos gêmeos de Álvaro & Alessandra! 💙💗';
   if (navigator.share){
-    try {
-      await navigator.share({title:'Chá Revelação', text: texto, url: url});
-    } catch(e){/* cancelado */}
+    try { await navigator.share({title:'Chá Revelação', text: texto, url: url}); } catch(e){/* cancelado */}
   } else {
     try {
       await navigator.clipboard.writeText(url);
-      const btn = document.getElementById('btn-compartilhar');
-      const original = btn.innerHTML;
-      btn.innerHTML = '✅ Link copiado!';
-      setTimeout(()=>{ btn.innerHTML = original; }, 2500);
-    } catch(e){
-      prompt('Copie o link do convite:', url);
-    }
+      const original = btnComp.innerHTML;
+      btnComp.innerHTML = '✅ Link copiado!';
+      setTimeout(()=>{ btnComp.innerHTML = original; }, 2500);
+    } catch(e){ prompt('Copie o link do convite:', url); }
+  }
+});
+
+// ============================================================
+// PAINEL ADMIN
+// ============================================================
+async function carregarPainelAdmin(){
+  const loading = document.getElementById('admin-loading');
+  const conteudo = document.getElementById('admin-conteudo');
+
+  const dados = await lerDados();
+
+  if (!dados){
+    loading.innerHTML = '❌ Erro ao carregar dados.<br>Verifique sua conexão e tente novamente.';
+    return;
+  }
+
+  loading.style.display = 'none';
+  conteudo.style.display = 'block';
+
+  const confirmados = dados.confirmacoes.filter(c => c.vem === 'sim');
+  const recusados = dados.confirmacoes.filter(c => c.vem === 'nao');
+  const totalPessoas = confirmados.reduce((soma, c) => soma + 1 + (c.acompanhantes || 0), 0);
+
+  // Cards de estatísticas
+  document.getElementById('stat-visitas').textContent = dados.visitas || 0;
+  document.getElementById('stat-confirmados').textContent = confirmados.length;
+  document.getElementById('stat-recusados').textContent = recusados.length;
+  document.getElementById('stat-total').textContent = totalPessoas;
+
+  // Listas
+  document.getElementById('qtd-sim').textContent = confirmados.length;
+  document.getElementById('qtd-nao').textContent = recusados.length;
+  renderizarLista('lista-sim', confirmados, 'sim');
+  renderizarLista('lista-nao', recusados, 'nao');
+}
+
+function escapeHtml(str){
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+}
+
+function formatarData(iso){
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' }) +
+           ' às ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  } catch(e){ return ''; }
+}
+
+function renderizarLista(elId, lista, tipo){
+  const el = document.getElementById(elId);
+  if (lista.length === 0){
+    el.innerHTML = `<div class="admin-vazio">${tipo === 'sim' ? 'Ninguém confirmou ainda 🤍' : 'Ninguém recusou ainda 🌸'}</div>`;
+    return;
+  }
+  // Ordena pela data (mais recentes primeiro)
+  const ordenada = [...lista].sort((a,b) => (b.enviado_em||'').localeCompare(a.enviado_em||''));
+  el.innerHTML = ordenada.map(c => {
+    const total = 1 + (c.acompanhantes || 0);
+    const pessoasTexto = tipo === 'sim'
+      ? (c.acompanhantes > 0
+          ? `+ ${c.acompanhantes} acompanhante${c.acompanhantes>1?'s':''} (total: ${total})`
+          : 'Sozinho(a)')
+      : '';
+    const badge = tipo === 'sim'
+      ? `<span class="admin-item-pessoas">${total} pessoa${total>1?'s':''}</span>`
+      : `<span class="admin-item-pessoas">Não vai</span>`;
+    return `
+      <div class="admin-item ${tipo}">
+        <div>
+          <div class="admin-item-nome">${escapeHtml(c.nome)}</div>
+          ${pessoasTexto ? `<div class="admin-item-acomp">${pessoasTexto}</div>` : ''}
+        </div>
+        <div>
+          ${badge}
+          <div class="admin-item-data">${formatarData(c.enviado_em)}</div>
+        </div>
+        ${c.recado ? `<div class="admin-item-recado">${escapeHtml(c.recado)}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// Botões do admin
+const adminSair = document.getElementById('admin-sair');
+if (adminSair) adminSair.addEventListener('click', ()=>{
+  window.location.href = window.location.origin + window.location.pathname;
+});
+
+const btnAtualizar = document.getElementById('btn-atualizar');
+if (btnAtualizar) btnAtualizar.addEventListener('click', async ()=>{
+  document.getElementById('admin-loading').style.display = 'block';
+  document.getElementById('admin-loading').textContent = 'Atualizando... ⏳';
+  document.getElementById('admin-conteudo').style.display = 'none';
+  await carregarPainelAdmin();
+});
+
+const btnExportar = document.getElementById('btn-exportar');
+if (btnExportar) btnExportar.addEventListener('click', async ()=>{
+  const dados = await lerDados();
+  if (!dados) return;
+  let csv = 'Nome,Vai?,Acompanhantes,Total,Recado,Enviado em\n';
+  dados.confirmacoes.forEach(c => {
+    const total = c.vem === 'sim' ? 1 + (c.acompanhantes||0) : 0;
+    const linha = [
+      `"${(c.nome||'').replace(/"/g,'""')}"`,
+      c.vem === 'sim' ? 'Sim' : 'Não',
+      c.acompanhantes || 0,
+      total,
+      `"${(c.recado||'').replace(/"/g,'""')}"`,
+      formatarData(c.enviado_em)
+    ].join(',');
+    csv += linha + '\n';
+  });
+  const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `cha-revelacao-confirmacoes-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+const btnCopiar = document.getElementById('btn-copiar');
+if (btnCopiar) btnCopiar.addEventListener('click', async ()=>{
+  const dados = await lerDados();
+  if (!dados) return;
+  const confirmados = dados.confirmacoes.filter(c => c.vem === 'sim');
+  const total = confirmados.reduce((s,c) => s + 1 + (c.acompanhantes||0), 0);
+  let texto = `📋 RESUMO CHÁ REVELAÇÃO\n`;
+  texto += `${'='.repeat(30)}\n`;
+  texto += `👀 Visitantes: ${dados.visitas || 0}\n`;
+  texto += `✅ Confirmados: ${confirmados.length}\n`;
+  texto += `🎉 Total no evento: ${total} pessoas\n\n`;
+  texto += `LISTA DE CONFIRMADOS:\n`;
+  confirmados.forEach(c => {
+    const t = 1 + (c.acompanhantes||0);
+    texto += `• ${c.nome} (${t} pessoa${t>1?'s':''})${c.recado ? ' — "' + c.recado + '"' : ''}\n`;
+  });
+  try {
+    await navigator.clipboard.writeText(texto);
+    const original = btnCopiar.innerHTML;
+    btnCopiar.innerHTML = '✅ Copiado!';
+    setTimeout(()=>{ btnCopiar.innerHTML = original; }, 2500);
+  } catch(e){
+    prompt('Copie o resumo:', texto);
   }
 });
 </script>
