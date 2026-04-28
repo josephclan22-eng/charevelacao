@@ -1409,6 +1409,31 @@ async function salvarDados(dados){
 }
 
 // ============================================================
+// ATUALIZAÇÃO SEGURA — relê os dados frescos antes de salvar
+// pra evitar sobrescrever alterações feitas por outras pessoas
+// em paralelo (race condition).
+// ============================================================
+async function atualizarComRetry(modificador, tentativas = 3){
+  for (let i = 0; i < tentativas; i++){
+    // Sempre lê os dados MAIS RECENTES antes de modificar
+    const dados = await lerDados();
+    if (!dados) {
+      // Se falhou ao ler, espera um pouquinho e tenta de novo
+      if (i < tentativas - 1) await new Promise(r => setTimeout(r, 500));
+      continue;
+    }
+    // Aplica a modificação que a função chamadora pediu
+    const dadosAtualizados = modificador(dados);
+    // Salva
+    const ok = await salvarDados(dadosAtualizados);
+    if (ok) return true;
+    // Se falhou, espera um pouquinho antes da próxima tentativa
+    if (i < tentativas - 1) await new Promise(r => setTimeout(r, 500));
+  }
+  return false;
+}
+
+// ============================================================
 // CONTAGEM REGRESSIVA
 // ============================================================
 const dataEvento = new Date('2026-05-30T15:30:00-03:00').getTime();
@@ -1466,10 +1491,12 @@ async function registrarVisita(){
   try { jaContou = sessionStorage.getItem('ja_visitou'); } catch(e){}
   if (jaContou) return;
 
-  const dados = await lerDados();
-  if (!dados) return;
-  dados.visitas = (dados.visitas || 0) + 1;
-  const ok = await salvarDados(dados);
+  // Tenta atualizar com retry — relê os dados imediatamente antes de salvar
+  // pra não sobrescrever confirmações de outras pessoas que aconteceram em paralelo
+  const ok = await atualizarComRetry((dados) => {
+    dados.visitas = (dados.visitas || 0) + 1;
+    return dados;
+  });
   if (ok){
     try { sessionStorage.setItem('ja_visitou', '1'); } catch(e){}
   }
@@ -1542,17 +1569,19 @@ function mostrarStatus(msg, tipo){
 }
 
 async function salvarConfirmacao(novo){
-  const dados = await lerDados();
-  if (!dados) return false;
-
-  // Verifica se essa pessoa já confirmou (pelo ID local) — atualiza em vez de duplicar
-  const idx = dados.confirmacoes.findIndex(c => c.id === novo.id);
-  if (idx >= 0){
-    dados.confirmacoes[idx] = novo;
-  } else {
-    dados.confirmacoes.push(novo);
-  }
-  return await salvarDados(dados);
+  // Usa atualização segura: relê os dados frescos antes de adicionar/atualizar
+  // pra não sobrescrever confirmações de outras pessoas
+  return await atualizarComRetry((dados) => {
+    if (!Array.isArray(dados.confirmacoes)) dados.confirmacoes = [];
+    // Verifica se essa pessoa já confirmou (pelo ID) — atualiza em vez de duplicar
+    const idx = dados.confirmacoes.findIndex(c => c.id === novo.id);
+    if (idx >= 0){
+      dados.confirmacoes[idx] = novo;
+    } else {
+      dados.confirmacoes.push(novo);
+    }
+    return dados;
+  });
 }
 
 if (form) form.addEventListener('submit', async (e)=>{
